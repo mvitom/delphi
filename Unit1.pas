@@ -41,13 +41,20 @@ begin
 end;
 procedure TForm1.Button1Click(Sender: TObject);
 var i:integer;
+  ii,jj: Integer;
 begin
-  for i := 0 to 50000 do
+  //for i := 0 to 50000 do
     begin
-      x:=(random(401)-200)/200;
-      y:=(random(401)-200)/200;
+      for ii := 0 to 400 do
+      for jj := 0 to 400 do
+      begin
+
+      ///x:=(random(401)-200)/200;
+      //y:=(random(401)-200)/200;
+      x:= (ii-200)/200;
+      y:= (jj-200)/200;
       //z:=(x*x*x)-y+y*y;
-      z:=((y*y)+sin(5*x)+cos(7*x*y));
+      z:=x*x+sin(5*y)+cos(7*x*y);
       zB:=round(255-90*z) div 2;
       if zb <64 then
         begin
@@ -79,6 +86,9 @@ begin
 
       Form1.Image1.Canvas.Pixels[Round(x*200)+x0,Round(y*200)+y0]:=RGB(R,G,B);
     end;
+    Form1.Image1.Canvas.MoveTo(0,Form1.Image1.Height div 2); Form1.Image1.Canvas.LineTo(Form1.Image1.Width,Form1.Image1.Height div 2);
+    Form1.Image1.Canvas.MoveTo(Form1.Image1.Height div 2,0); Form1.Image1.Canvas.LineTo(Form1.Image1.Height div 2,Form1.Image1.Width);
+    end;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -95,14 +105,16 @@ end;
 procedure TForm1.Button3Click(Sender: TObject);
 begin
   bod;
+  //zigzag
   //Form1.Image1.Canvas.Pixels[Round(x*200)+x0,Round(y*200)+y0]:=RGB(R,G,B);
   if Form1.RadioButton1.Checked then
   begin
-  z0:=x*x+y*y;
+  z0:=x*x+sin(5*y)+cos(7*x*y);
+  //z0:=x*x+y*y;
   x:=x+sx/200;
   y:=y+sy/200;
-  z:=x*x+y*y;
-  //z:=((y*y)*sin(5*x)+cos(7*x*y));
+  //z:=x*x+y*y;
+  z:=x*x+sin(5*y)+cos(7*x*y);
   if z>z0 then
     begin
       x:=x-sx/200;
@@ -111,52 +123,39 @@ begin
       begin
         sx:=0;
         zn:=random(2);
-        sx:=2*zn-1;
+        sy:=2*zn-1;
       end
       else
       begin
         sy:=0;
         zn:=random(2);
-        sy:=2*zn-1;
+        sx:=2*zn-1;
       end;
     end;
   end;
   if Form1.RadioButton2.Checked then
   begin
-  //z0:=x*x+y*y;
-  z0:=((y*y)+sin(5*x)+cos(7*x*y));
+
+  z0:=x*x+sin(5*y)+cos(7*x*y);
   x:=x+sx/200;
   y:=y+sy/200;
-  //z:=x*x+y*y;
-  z:=((y*y)+sin(5*x)+cos(7*x*y));
-  //z:=((y*y)*sin(5*x)+cos(7*x*y));
+  z:=x*x+sin(5*y)+cos(7*x*y);
   if z>z0 then
     begin
       x:=x-sx/200;
       y:=y-sy/200;
       //prejel tak se vraci o krok zpet
-      sx := (random(401)-200/200);
-      sy := (random(401)-200/200);
-      {if sx<>0 then
-      begin
-        sx:=0;
-        zn:=random(2);
-        sx:=2*zn-1;
-      end
-      else
-      begin
-        sy:=0;
-        zn:=random(2);
-        sy:=2*zn-1;
-      end; }
+      sx := (random(401)-200)/200;
+      sy := (random(401)-200)/200;
+
     end;
   end;
   if Form1.RadioButton3.Checked then
   begin
-  z0:=x*x+y*y;
+  z0:=x*x+sin(5*y)+cos(7*x*y);
   x:=x+sx/200;
   y:=y+sy/200;
-  z:=x*x+y*y;
+  z:=x*x+sin(5*y)+cos(7*x*y);
   //z:=((y*y)*sin(5*x)+cos(7*x*y));
   if z>z0 then
     begin
@@ -167,13 +166,13 @@ begin
       begin
         sx:=0;
         zn:=random(2);
-        sx:=2*zn-1;
+        sy:=2*zn-1;
       end
       else
       begin
         sy:=0;
         zn:=random(2);
-        sy:=2*zn-1;
+        sx:=2*zn-1;
       end;
     end;
   end;
@@ -183,9 +182,11 @@ procedure TForm1.FormCreate(Sender: TObject);
   begin
   x0:=Form1.Image1.Width div 2;
   y0:=Form1.Image1.Height div 2;
-  //Form1.Image1.Canvas.Rectangle(0,0,Form1.Image1.Width,Form1.Image1.Height);
-  Form1.Image1.Canvas.MoveTo(0,Form1.Image1.Height div 2); Form1.Image1.Canvas.LineTo(Form1.Image1.Width,Form1.Image1.Height div 2);
-  Form1.Image1.Canvas.MoveTo(Form1.Image1.Height div 2,0); Form1.Image1.Canvas.LineTo(Form1.Image1.Height div 2,Form1.Image1.Width);
+  Form1.Image1.Canvas.Rectangle(0,0,Form1.Image1.Width,Form1.Image1.Height);
+  Form1.Image1.Canvas.MoveTo(0,Form1.Image1.Height div 2);
+  Form1.Image1.Canvas.LineTo(Form1.Image1.Width,Form1.Image1.Height div 2);
+  Form1.Image1.Canvas.MoveTo(Form1.Image1.Height div 2,0);
+  Form1.Image1.Canvas.LineTo(Form1.Image1.Height div 2,Form1.Image1.Width);
   end;
 
 end.
